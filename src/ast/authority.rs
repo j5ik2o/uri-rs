@@ -1,0 +1,42 @@
+use crate::ast::user_info::UserInfo;
+use std::fmt::Formatter;
+use crate::ast::host_name::HostName;
+
+#[derive(Debug, Clone, PartialEq, Hash)]
+pub struct Authority {
+  host_name: HostName,
+  port: Option<u64>,
+  user_info: Option<UserInfo>,
+}
+
+impl std::fmt::Display for Authority {
+  fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    write!(
+      f,
+      "{}{}{}",
+      self
+        .user_info
+        .iter()
+        .map(|ui| format!("{}@", ui.to_string()))
+        .fold("".to_string(), |mut acc, s| {
+          acc.push_str(&s);
+          acc
+        }),
+      self.host_name.to_string(),
+      self
+        .port
+        .map(|n| format!(":{}", n))
+        .unwrap_or("".to_string()),
+    )
+  }
+}
+
+impl Authority {
+  pub fn new(host_name: HostName, port: Option<u64>, user_info: Option<UserInfo>) -> Self {
+    Self {
+      host_name,
+      port,
+      user_info,
+    }
+  }
+}
