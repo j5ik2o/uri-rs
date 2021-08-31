@@ -5,7 +5,7 @@ use crate::ast::host_name::HostName;
 #[derive(Debug, Clone, PartialEq, Hash)]
 pub struct Authority {
   host_name: HostName,
-  port: Option<u64>,
+  port: Option<u16>,
   user_info: Option<UserInfo>,
 }
 
@@ -42,7 +42,7 @@ impl std::fmt::Display for Authority {
 }
 
 impl Authority {
-  pub fn new(host_name: HostName, port: Option<u64>, user_info: Option<UserInfo>) -> Self {
+  pub fn new(host_name: HostName, port: Option<u16>, user_info: Option<UserInfo>) -> Self {
     Self {
       host_name,
       port,
@@ -54,12 +54,11 @@ impl Authority {
     &self.host_name
   }
 
-  pub fn port(&self) -> Option<u64> {
+  pub fn port(&self) -> Option<u16> {
     self.port
   }
 
   pub fn user_info(&self) -> Option<&UserInfo> {
     self.user_info.as_ref()
   }
-
 }

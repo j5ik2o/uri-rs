@@ -7,12 +7,12 @@ use nom::error::context;
 use crate::parser::parsers::{Elms, UResult};
 
 #[inline]
-pub(crate) fn port(i: Elms) -> UResult<Elms, u64> {
+pub(crate) fn port(i: Elms) -> UResult<Elms, u16> {
   context(
     "port",
     map(digit1, |e: Elms| {
       let s = e.as_str().unwrap();
-      u64::from_str(s).unwrap()
+      u16::from_str(s).unwrap()
     }),
   )(i)
 }
