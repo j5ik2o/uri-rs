@@ -216,7 +216,9 @@ mod tests {
       move |s| {
         counter += 1;
         log::debug!("{}, value = {}", counter, s);
-        reg_name(Elms::new(s.as_bytes())).is_ok()
+        let (_, reg_name) = reg_name(Elms::new(s.as_bytes())).ok().unwrap();
+        assert_eq!(reg_name.to_string(), s);
+        true
       },
     );
     prop::test_with_prop(prop, 5, TEST_COUNT, RNG::new())

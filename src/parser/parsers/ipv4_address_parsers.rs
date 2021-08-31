@@ -124,7 +124,7 @@ mod tests {
       || dec_octet_str_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = dec_octet(Elms::new(s.as_bytes())).ok().unwrap();
         r == s
       },

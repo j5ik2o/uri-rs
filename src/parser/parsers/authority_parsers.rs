@@ -83,7 +83,7 @@ mod tests {
       || authority_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, authority) = authority(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(authority.to_string(), s);
         true

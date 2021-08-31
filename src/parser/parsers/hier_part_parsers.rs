@@ -70,7 +70,7 @@ mod tests {
       || hier_part_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, (authority, path)) = hier_part(Elms::new(s.as_bytes())).ok().unwrap();
         let sa = authority
           .map(|e| format!("//{}", e))

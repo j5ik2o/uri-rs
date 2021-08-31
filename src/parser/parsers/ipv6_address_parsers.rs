@@ -461,7 +461,7 @@ mod test {
       || h16_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = h16(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(r, s);
         true
@@ -478,7 +478,7 @@ mod test {
       || ls32_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = ls32(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(r, s);
         true
@@ -495,7 +495,7 @@ mod test {
       || ipv6_address_gen1(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = ipv6_address1(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(r, s);
         true
@@ -512,7 +512,7 @@ mod test {
       || ipv6_address_gen2(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = ipv6_address2(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(r, s);
         true
@@ -529,7 +529,7 @@ mod test {
       || ipv6_address_gen3(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         ipv6_address3(Elms::new(s.as_bytes())).is_ok()
       },
     );
@@ -544,7 +544,7 @@ mod test {
       || ipv6_address_gen4(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let r = ipv6_address4(Elms::new(s.as_bytes()));
         let (_, r) = r.ok().unwrap();
         assert_eq!(r, s);
@@ -562,7 +562,7 @@ mod test {
       || ipv6_address_gen5(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = ipv6_address_parsers::ipv6_address5(Elms::new(s.as_bytes()))
           .ok()
           .unwrap();
@@ -581,7 +581,7 @@ mod test {
       || ipv6_address_gen6(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = ipv6_address6(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(r, s);
         true
@@ -598,7 +598,7 @@ mod test {
       || ipv6_address_gen7(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = ipv6_address_parsers::ipv6_address7(Elms::new(s.as_bytes()))
           .ok()
           .unwrap();
@@ -617,7 +617,7 @@ mod test {
       || ipv6_address_gen8(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = ipv6_address8(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(r, s);
         true
@@ -634,7 +634,7 @@ mod test {
       || ipv6_address_gen9(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = ipv6_address9(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(r, s);
         true
@@ -651,7 +651,7 @@ mod test {
       || ipv6_address_str_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = ipv6_address(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(r, s);
         true

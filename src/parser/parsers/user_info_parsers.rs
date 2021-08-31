@@ -87,7 +87,7 @@ mod tests {
       || user_info_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = user_info(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(r.to_string(), s);
         true

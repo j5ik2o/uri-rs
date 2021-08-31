@@ -260,7 +260,7 @@ mod tests {
       || unreserved_str_gen(u8::MAX - 1),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = many1(unreserved)(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(r.into_iter().collect::<String>(), s);
         true
@@ -277,7 +277,7 @@ mod tests {
       || gen_delims_str_gen(u8::MAX - 1),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = many1(gen_delims)(Elms::new(s.as_bytes())).ok().unwrap();
         r.into_iter().collect::<String>() == s
       },
@@ -293,7 +293,7 @@ mod tests {
       || sub_delims_str_gen(u8::MAX - 1),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = many1(sub_delims)(Elms::new(s.as_bytes())).ok().unwrap();
         r.into_iter().collect::<String>() == s
       },
@@ -309,7 +309,7 @@ mod tests {
       || reserved_str_gen(u8::MAX - 1),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = many1(reserved)(Elms::new(s.as_bytes())).ok().unwrap();
         r.into_iter().collect::<String>() == s
       },
@@ -325,7 +325,7 @@ mod tests {
       || pct_encoded_str_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = pct_encoded(Elms::new(s.as_bytes())).ok().unwrap();
         r == s
       },
@@ -341,7 +341,7 @@ mod tests {
       || pchar_str_gen(1, u8::MAX - 1),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = many1(pchar)(Elms::new(s.as_bytes())).ok().unwrap();
         r.into_iter().collect::<String>() == s
       },

@@ -116,7 +116,7 @@ mod tests {
       || pchar_without_eq_and_str_gen(1, u8::MAX - 1),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, r) = many1(pchar_without_eq_and)(Elms::new(s.as_bytes()))
           .ok()
           .unwrap();
@@ -134,7 +134,7 @@ mod tests {
       || query_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{:>03}, value = {}", counter, s);
         let (_, query) = query(Elms::new(s.as_bytes())).ok().unwrap();
         log::debug!("as_string = {:?}", query.as_string());
         let params = query.params();
