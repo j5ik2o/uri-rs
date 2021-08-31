@@ -22,7 +22,6 @@ percent-encoding = "2.1.0"
 once_cell = "1.8.0"
 itertools = "0.10.1"
 nom = "7.0.0"
-typed-builder = "0.9.0"
 serde = { version = "1", optional = true }
 
 [dev-dependencies]
