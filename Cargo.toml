@@ -1,5 +1,5 @@
 [package]
-name = "uri-rs"
+name = "uri-parsing-rs"
 version = "0.0.1"
 description = "A Rust crate for URI"
 authors = ["Junichi Kato <j5ik2o@gmail.com>"]
