@@ -6,7 +6,7 @@ use nom::multi::{many0, many1};
 use nom::sequence::{preceded, tuple};
 
 use crate::ast::path::Path;
-use crate::parser::parsers::{Elms, UResult, UriParseError};
+use crate::parser::parsers::{Elms, UResult};
 use crate::parser::parsers::basic_parsers::*;
 
 #[inline]
@@ -144,7 +144,6 @@ pub mod gens {
   use prop_check_rs::gen::{Gen, Gens};
 
   use crate::parser::parsers::basic_parsers::gens::*;
-  use pom::set::Set;
 
   pub fn segment_str_gen() -> Gen<String> {
     pchar_str_gen(0, u8::MAX - 1)
@@ -196,12 +195,15 @@ pub mod gens {
   #[derive(Clone, Debug)]
   pub struct Pair<A, B>(pub(crate) A, pub(crate) B);
 
-  impl<A, B> std::fmt::Display for Pair<A, B> where A: std::fmt::Display, B: std::fmt::Display {
+  impl<A, B> std::fmt::Display for Pair<A, B>
+  where
+    A: std::fmt::Display,
+    B: std::fmt::Display,
+  {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
       write!(f, "({},{})", self.0, self.1)
     }
   }
-
 
   pub fn path_str_with_abempty_gen() -> Gen<Pair<String, String>> {
     Gens::choose_u8(1, 5).bind(|n| match n {

@@ -5,7 +5,6 @@ use nom::sequence::{preceded, tuple};
 use crate::ast::authority::Authority;
 use crate::ast::path::Path;
 use crate::parser::parsers::{authority_parsers, Elms, path_parsers, UResult};
-use std::fmt::Formatter;
 
 // hier-part     = "//" authority path-abempty
 // / path-absolute
@@ -81,7 +80,7 @@ mod tests {
     let mut counter = 0;
     let prop = prop::for_all(
       || hier_part_gen(),
-      move |Pair(s, b)| {
+      move |Pair(s, _b)| {
         counter += 1;
         log::debug!("{:>03}, hier_part = {}", counter, s);
         let (_, (authority, path)) = hier_part(Elms::new(s.as_bytes())).ok().unwrap();

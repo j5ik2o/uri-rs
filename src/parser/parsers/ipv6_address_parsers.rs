@@ -441,8 +441,6 @@ mod test {
   use prop_check_rs::prop::TestCases;
   use prop_check_rs::rng::RNG;
 
-  use crate::parser::parsers::ipv6_address_parsers;
-
   use super::*;
   use super::gens::*;
 

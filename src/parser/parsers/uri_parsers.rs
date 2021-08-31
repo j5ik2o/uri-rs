@@ -70,8 +70,8 @@ pub mod gens {
 
   pub fn uri_gen() -> Gen<String> {
     scheme_gen().bind(|scheme| {
-      let base_gen =
-        hier_part_gen().fmap(move |Pair(hier_part, is_empty)| (format!("{}:{}", scheme, hier_part), is_empty));
+      let base_gen = hier_part_gen()
+        .fmap(move |Pair(hier_part, is_empty)| (format!("{}:{}", scheme, hier_part), is_empty));
       let query_gen = base_gen.bind(|(s, is_empty_opt)| {
         if is_empty_opt.unwrap_or(false) {
           Gen::<(String, Option<bool>)>::unit(|| (s.clone(), is_empty_opt))
