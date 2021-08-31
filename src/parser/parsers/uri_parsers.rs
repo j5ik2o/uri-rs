@@ -104,7 +104,7 @@ mod tests {
       || uri_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{:>03} value = {}", counter, s);
+        log::debug!("{:>03} uri = {}", counter, s);
         let (_, uri) = uri(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(uri.to_string(), s);
         true
@@ -112,5 +112,5 @@ mod tests {
     );
     prop::test_with_prop(prop, 5, TEST_COUNT, RNG::new())
   }
-  
+
 }

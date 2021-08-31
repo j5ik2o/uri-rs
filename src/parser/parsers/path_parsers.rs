@@ -233,7 +233,7 @@ mod tests {
       || segment_str_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{}, segment = {}", counter, s);
         let (_, r) = segment(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(r, s);
         true
@@ -251,7 +251,9 @@ mod tests {
       move |s| {
         counter += 1;
         log::debug!("{}, value = {}", counter, s);
-        segment_nz(Elms::new(s.as_bytes())).is_ok()
+        let (_, r) = segment_nz(Elms::new(s.as_bytes())).ok().unwrap();
+        assert_eq!(r, s);
+        true
       },
     );
     prop::test_with_prop(prop, 5, TEST_COUNT, RNG::new())
@@ -265,8 +267,10 @@ mod tests {
       || segment_nz_nc_str_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
-        segment_nz_nc(Elms::new(s.as_bytes())).is_ok()
+        log::debug!("{}, segment_nz_nc = {}", counter, s);
+        let (_, r) = segment_nz_nc(Elms::new(s.as_bytes())).ok().unwrap();
+        assert_eq!(r, s);
+        true
       },
     );
     prop::test_with_prop(prop, 5, TEST_COUNT, RNG::new())
@@ -280,9 +284,8 @@ mod tests {
       || path_abempty_str_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{:>03}, value = {}", counter, s);
+        log::debug!("{:>03}, path_abempty = {}", counter, s);
         let (_, r) = path_abempty(Elms::new(s.as_bytes())).ok().unwrap();
-        log::debug!("{:>03}, value = {}", counter, r);
         assert_eq!(r.to_string(), s);
         true
       },
@@ -298,9 +301,8 @@ mod tests {
       || path_absolute_str_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{:>03}, value = {}", counter, s);
+        log::debug!("{:>03}, path_absolute = {}", counter, s);
         let (_, r) = path_absolute(Elms::new(s.as_bytes())).ok().unwrap();
-        log::debug!("{:>03}, value = {}", counter, r);
         assert_eq!(r.to_string(), s);
         true
       },
@@ -316,9 +318,8 @@ mod tests {
       || path_no_scheme_str_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{:>03}, value = {}", counter, s);
+        log::debug!("{:>03}, path_no_scheme = {}", counter, s);
         let (_, r) = path_no_scheme(Elms::new(s.as_bytes())).ok().unwrap();
-        log::debug!("{:>03}, value = {}", counter, r);
         assert_eq!(r.to_string(), s);
         true
       },
@@ -334,9 +335,8 @@ mod tests {
       || path_rootless_str_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{:>03}, value = {}", counter, s);
+        log::debug!("{:>03}, path_rootless = {}", counter, s);
         let (_, r) = path_rootless(Elms::new(s.as_bytes())).ok().unwrap();
-        log::debug!("{:>03}, value = {}", counter, r);
         assert_eq!(r.to_string(), s);
         true
       },
@@ -352,11 +352,10 @@ mod tests {
       || path_str_without_abempty_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{:>03}, {:?}, {:?}", counter, s.0, s.1);
+        log::debug!("{:>03}, path_type = {:?}, path_without_abempty = {:?}", counter, s.0, s.1);
         let (_, r) = path_without_abempty(Elms::new(s.1.as_bytes()))
           .ok()
           .unwrap();
-        log::debug!("{:>03}, {:?}", counter, r);
         assert_eq!(r.type_name(), s.0);
         assert_eq!(r.to_string(), s.1);
         true

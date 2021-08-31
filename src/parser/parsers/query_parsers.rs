@@ -134,7 +134,7 @@ mod tests {
       || query_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{:>03}, value = {}", counter, s);
+        log::debug!("{:>03}, query = {}", counter, s);
         let (_, query) = query(Elms::new(s.as_bytes())).ok().unwrap();
         log::debug!("as_string = {:?}", query.as_string());
         let params = query.params();

@@ -124,7 +124,7 @@ mod tests {
       || dec_octet_str_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{:>03}, value = {}", counter, s);
+        log::debug!("{:>03}, dec_octet = {}", counter, s);
         let (_, r) = dec_octet(Elms::new(s.as_bytes())).ok().unwrap();
         r == s
       },
@@ -140,7 +140,7 @@ mod tests {
       || ipv4_address_str_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{}, ipv4_address = {}", counter, s);
         let (_, r) = ipv4_address(Elms::new(s.as_bytes())).ok().unwrap();
         r == s
       },

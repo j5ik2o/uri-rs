@@ -74,7 +74,7 @@ mod tests {
       || scheme_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{:>03}, value = {}", counter, s);
+        log::debug!("{:>03}, scheme = {}", counter, s);
         let (_, r) = scheme(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(r.to_string(), s);
         true

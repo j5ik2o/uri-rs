@@ -60,7 +60,7 @@ mod tests {
       || fragment_str_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{:>03}, value = {}", counter, s);
+        log::debug!("{:>03}, fragment = {}", counter, s);
         let (_, fragment) = fragment(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(fragment, s);
         true

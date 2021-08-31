@@ -53,7 +53,7 @@ mod tests {
       || port_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{:>03}, value = {}", counter, s);
+        log::debug!("{:>03}, port = {}", counter, s);
         let (_, port) = port(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(port.to_string(), s);
         true

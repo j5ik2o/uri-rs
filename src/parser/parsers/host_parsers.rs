@@ -181,7 +181,7 @@ mod tests {
       || ip_literal_str_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{}, ip_literal = {}", counter, s);
         let (_, r) = ip_literal(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(r, s);
         true
@@ -198,7 +198,7 @@ mod tests {
       || ipv_future_str_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{}, ipv_future = {}", counter, s);
         let (_, r) = ipv_future(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(r, s);
         true
@@ -215,7 +215,7 @@ mod tests {
       || reg_name_str_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{}, reg_name = {}", counter, s);
         let (_, reg_name) = reg_name(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(reg_name.to_string(), s);
         true
@@ -232,7 +232,7 @@ mod tests {
       || host_gen(),
       move |s| {
         counter += 1;
-        log::debug!("{}, value = {}", counter, s);
+        log::debug!("{}, host_name = {}", counter, s);
         let (_, host_name) = host_name(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(host_name.to_string(), s);
         true
