@@ -26,7 +26,7 @@ pub(crate) fn hier_part(i: Elms) -> UResult<Elms, (Option<Authority>, Path)> {
 
 #[cfg(test)]
 pub mod gens {
-  use prop_check_rs::gen::{Gen, Gens};
+  use prop_check_rs::gen::{Gen};
 
   use crate::parser::parsers::authority_parsers::gens::authority_gen;
   use crate::parser::parsers::path_parsers::gens::*;

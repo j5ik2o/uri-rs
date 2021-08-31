@@ -2,7 +2,6 @@ use std::collections::HashMap;
 use itertools::Itertools;
 use std::fmt::Formatter;
 use std::cmp::Ordering;
-use pom::set::Set;
 
 #[derive(Debug, Clone, PartialEq, Hash)]
 pub struct Query {

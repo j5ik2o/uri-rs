@@ -123,15 +123,9 @@ pub(crate) fn path_without_abempty(i: Elms) -> UResult<Elms, Path> {
 pub mod gens {
   use std::fmt::Formatter;
 
-  use anyhow::Result;
   use prop_check_rs::gen::{Gen, Gens};
-  use prop_check_rs::prop;
-  use prop_check_rs::prop::TestCases;
-  use prop_check_rs::rng::RNG;
 
   use crate::parser::parsers::basic_parsers::gens::*;
-
-  use super::*;
 
   pub fn segment_str_gen() -> Gen<String> {
     pchar_str_gen(0, u8::MAX - 1)
@@ -214,15 +208,12 @@ pub mod gens {
 #[cfg(test)]
 mod tests {
   use std::env;
-  use std::fmt::Formatter;
 
   use anyhow::Result;
-  use prop_check_rs::gen::{Gen, Gens};
+
   use prop_check_rs::prop;
   use prop_check_rs::prop::TestCases;
   use prop_check_rs::rng::RNG;
-
-  use crate::parser::parsers::basic_parsers::gens::*;
 
   use super::*;
   use super::gens::*;
