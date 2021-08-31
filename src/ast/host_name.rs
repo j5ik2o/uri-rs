@@ -3,6 +3,12 @@ use std::fmt::Formatter;
 #[derive(Debug, Clone, PartialEq, Hash)]
 pub struct HostName(String);
 
+impl Default for HostName {
+  fn default() -> Self {
+    HostName(String::default())
+  }
+}
+
 impl std::fmt::Display for HostName {
   fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
     write!(f, "{}", self.0)

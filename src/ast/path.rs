@@ -26,6 +26,12 @@ pub enum Path {
   },
 }
 
+impl Default for Path {
+  fn default() -> Self {
+    Path::of_empty()
+  }
+}
+
 impl fmt::Display for Path {
   fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
     let root = match self {

@@ -5,6 +5,12 @@ use crate::parser::parsers::Elms;
 #[derive(Debug, Clone, PartialEq, Hash)]
 pub struct Scheme(String);
 
+impl Default for Scheme {
+  fn default() -> Self {
+    Scheme(String::default())
+  }
+}
+
 impl std::fmt::Display for Scheme {
   fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
     write!(f, "{}", self.0)

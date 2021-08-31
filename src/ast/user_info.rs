@@ -6,6 +6,15 @@ pub struct UserInfo {
   password: Option<String>,
 }
 
+impl Default for UserInfo {
+  fn default() -> Self {
+    UserInfo{
+      user_name: String::default(),
+      password: Option::default(),
+    }
+  }
+}
+
 impl std::fmt::Display for UserInfo {
   fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
     write!(

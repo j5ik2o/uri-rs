@@ -1,5 +1,4 @@
 use std::fmt::Formatter;
-
 use crate::ast::authority::Authority;
 use crate::ast::path::Path;
 use crate::ast::query::Query;
@@ -15,6 +14,18 @@ pub struct Uri {
   path: Path,
   query: Option<Query>,
   fragment: Option<String>,
+}
+
+impl Default for Uri {
+  fn default() -> Self {
+    Uri {
+      schema: Scheme::default(),
+      authority: Option::default(),
+      path: Path::default(),
+      query: Option::default(),
+      fragment: Option::default()
+    }
+  }
 }
 
 impl std::fmt::Display for Uri {
@@ -64,16 +75,6 @@ impl Uri {
     }
   }
 
-  pub fn with_scheme(&mut self, arg: Scheme) -> &Self {
-    self.schema = arg;
-    self
-  }
-
-  pub fn with_authority(&mut self, arg: Option<Authority>) -> &Self {
-    self.authority = arg;
-    self
-  }
-
   pub fn schema(&self) -> &Scheme {
     &self.schema
   }
@@ -106,7 +107,7 @@ impl Uri {
 #[cfg(test)]
 mod test {
   use std::env;
-  use crate::Uri;
+  use crate::{Uri, Scheme};
 
   fn init() {
     env::set_var("RUST_LOG", "debug");

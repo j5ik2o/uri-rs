@@ -8,6 +8,12 @@ pub struct Query {
   params: Vec<(String, Option<String>)>,
 }
 
+impl Default for Query {
+  fn default() -> Self {
+    Query{ params: Vec::default() }
+  }
+}
+
 impl PartialOrd for Query {
   fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
     self.to_string().partial_cmp(&other.to_string())

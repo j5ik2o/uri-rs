@@ -9,6 +9,16 @@ pub struct Authority {
   user_info: Option<UserInfo>,
 }
 
+impl Default for Authority {
+  fn default() -> Self {
+    Authority{
+      host_name: HostName::default(),
+      port: Option::default(),
+      user_info: Option::default(),
+    }
+  }
+}
+
 impl std::fmt::Display for Authority {
   fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
     write!(
