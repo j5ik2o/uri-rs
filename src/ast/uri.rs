@@ -24,7 +24,7 @@ impl Default for Uri {
       authority: Option::default(),
       path: Path::default(),
       query: Option::default(),
-      fragment: Option::default()
+      fragment: Option::default(),
     }
   }
 }
@@ -109,9 +109,7 @@ impl Uri {
 mod test {
   use std::env;
 
-  use crate::{Scheme, Uri};
-
-  use super::*;
+  use crate::{Uri};
 
   fn init() {
     env::set_var("RUST_LOG", "debug");

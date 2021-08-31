@@ -10,7 +10,9 @@ pub struct Query {
 
 impl Default for Query {
   fn default() -> Self {
-    Query{ params: Vec::default() }
+    Query {
+      params: Vec::default(),
+    }
   }
 }
 

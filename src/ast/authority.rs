@@ -11,7 +11,7 @@ pub struct Authority {
 
 impl Default for Authority {
   fn default() -> Self {
-    Authority{
+    Authority {
       host_name: HostName::default(),
       port: Option::default(),
       user_info: Option::default(),

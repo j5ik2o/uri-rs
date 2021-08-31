@@ -8,7 +8,7 @@ pub struct UserInfo {
 
 impl Default for UserInfo {
   fn default() -> Self {
-    UserInfo{
+    UserInfo {
       user_name: String::default(),
       password: Option::default(),
     }
