@@ -8,6 +8,7 @@ use nom::lib::std::slice::Iter;
 
 use std::string::FromUtf8Error;
 use std::str::Utf8Error;
+use std::fmt::Formatter;
 
 pub mod authority_parsers;
 pub mod basic_parsers;
@@ -27,6 +28,12 @@ pub mod user_info_parsers;
 #[derive(Clone, PartialEq)]
 pub struct Elms<'a> {
   values: &'a [u8],
+}
+
+impl<'a> std::fmt::Display for Elms<'a> {
+  fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    write!(f, "{}", self.as_str().unwrap())
+  }
 }
 
 impl<'a> Elms<'a> {

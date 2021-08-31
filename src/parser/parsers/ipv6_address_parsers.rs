@@ -565,9 +565,7 @@ mod test {
       move |s| {
         counter += 1;
         log::debug!("{:>03}, ipv6_address5 = {}", counter, s);
-        let (_, r) = ipv6_address5(Elms::new(s.as_bytes()))
-          .ok()
-          .unwrap();
+        let (_, r) = ipv6_address5(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(r, s);
         true
       },
@@ -601,9 +599,7 @@ mod test {
       move |s| {
         counter += 1;
         log::debug!("{:>03}, ipv6_address7 = {}", counter, s);
-        let (_, r) = ipv6_address7(Elms::new(s.as_bytes()))
-          .ok()
-          .unwrap();
+        let (_, r) = ipv6_address7(Elms::new(s.as_bytes())).ok().unwrap();
         assert_eq!(r, s);
         true
       },

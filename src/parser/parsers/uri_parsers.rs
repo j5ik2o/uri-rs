@@ -66,13 +66,27 @@ pub mod gens {
   use crate::parser::parsers::hier_part_parsers::gens::hier_part_gen;
   use crate::parser::parsers::query_parsers::gens::query_gen;
   use crate::parser::parsers::scheme_parsers::gens::scheme_gen;
+  use crate::parser::parsers::path_parsers::gens::Pair;
 
   pub fn uri_gen() -> Gen<String> {
     scheme_gen().bind(|scheme| {
-      let g1 = hier_part_gen().fmap(move |hier_part| format!("{}:{}", scheme, hier_part));
-      let g2 = g1.bind(|s| query_gen().fmap(move |q| format!("{}?{}", s, q)));
-      let g3 = g2.bind(|s| fragment_str_gen().fmap(move |f| format!("{}#{}", s, f)));
-      g3
+      let base_gen =
+        hier_part_gen().fmap(move |Pair(hier_part, is_empty)| (format!("{}:{}", scheme, hier_part), is_empty));
+      let query_gen = base_gen.bind(|(s, is_empty_opt)| {
+        if is_empty_opt.unwrap_or(false) {
+          Gen::<(String, Option<bool>)>::unit(|| (s.clone(), is_empty_opt))
+        } else {
+          query_gen().fmap(move |q| (format!("{}?{}", s, q), is_empty_opt))
+        }
+      });
+      let fragment_gen = query_gen.bind(|(s, is_empty_opt)| {
+        if is_empty_opt.unwrap_or(false) {
+          Gen::<(String, Option<bool>)>::unit(|| s.clone())
+        } else {
+          fragment_str_gen().fmap(move |f| format!("{}#{}", s, f))
+        }
+      });
+      fragment_gen
     })
   }
 }
@@ -112,5 +126,4 @@ mod tests {
     );
     prop::test_with_prop(prop, 5, TEST_COUNT, RNG::new())
   }
-
 }

@@ -5,6 +5,7 @@ use nom::sequence::{preceded, tuple};
 use crate::ast::authority::Authority;
 use crate::ast::path::Path;
 use crate::parser::parsers::{authority_parsers, Elms, path_parsers, UResult};
+use std::fmt::Formatter;
 
 // hier-part     = "//" authority path-abempty
 // / path-absolute
@@ -19,27 +20,38 @@ pub(crate) fn hier_part(i: Elms) -> UResult<Elms, (Option<Authority>, Path)> {
   {
     Ok((i, (Some(authority), path)))
   } else {
-    let (i, path) = path_parsers::path_without_abempty(i.clone())?;
+    log::debug!("path_without_abempty = {}", i.clone());
+    let (i, path) = path_parsers::path_without_abempty(i)?;
     Ok((i, (None, path)))
   }
 }
 
 #[cfg(test)]
 pub mod gens {
-  use prop_check_rs::gen::{Gen};
+  use prop_check_rs::gen::{Gen, Gens};
 
   use crate::parser::parsers::authority_parsers::gens::authority_gen;
   use crate::parser::parsers::path_parsers::gens::*;
 
-  pub fn hier_part_gen() -> Gen<String> {
+  pub fn hier_part_gen() -> Gen<Pair<String, Option<bool>>> {
     let gen1 = || {
       authority_gen().bind(move |authority| {
         path_abempty_str_gen().fmap(move |path_abempty| format!("//{}{}", authority, path_abempty))
       })
     };
-    gen1()
-    //    let gen2 = || path_str_without_abempty_gen().fmap(|Pair(_, p2)| p2);
-    //    Gens::one_bool().bind(move |b| if b { gen1() } else { gen2() })
+    let gen2 = || {
+      path_str_without_abempty_gen().fmap(|Pair(p1, p2)| {
+        println!("p1 = {}", p1);
+        Pair(p2, Some(p1 == "empty_path".to_string()))
+      })
+    };
+    Gens::one_bool().bind(move |b| {
+      if b {
+        gen1().fmap(|s| Pair(s, None))
+      } else {
+        gen2()
+      }
+    })
   }
 }
 
@@ -54,6 +66,7 @@ mod tests {
 
   use super::*;
   use super::gens::*;
+  use crate::parser::parsers::path_parsers::gens::Pair;
 
   const TEST_COUNT: TestCases = 100;
 
@@ -68,7 +81,7 @@ mod tests {
     let mut counter = 0;
     let prop = prop::for_all(
       || hier_part_gen(),
-      move |s| {
+      move |Pair(s, b)| {
         counter += 1;
         log::debug!("{:>03}, hier_part = {}", counter, s);
         let (_, (authority, path)) = hier_part(Elms::new(s.as_bytes())).ok().unwrap();
