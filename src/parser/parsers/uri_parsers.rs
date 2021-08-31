@@ -11,7 +11,7 @@ use crate::parser::parsers::{
 
 // absolute-URI  = scheme ":" hier-part [ "?" query ]
 #[inline]
-pub(crate) fn absolute_uri(i: Elms) -> UResult<Elms, Uri> {
+pub fn absolute_uri(i: Elms) -> UResult<Elms, Uri> {
   context(
     "absolute_uri",
     map(
@@ -35,7 +35,7 @@ pub(crate) fn absolute_uri(i: Elms) -> UResult<Elms, Uri> {
 
 // URI = scheme ":" hier-part [ "?" query ] [ "#" fragment ]
 #[inline]
-pub(crate) fn uri(i: Elms) -> UResult<Elms, Uri> {
+pub fn uri(i: Elms) -> UResult<Elms, Uri> {
   context(
     "uri",
     map(

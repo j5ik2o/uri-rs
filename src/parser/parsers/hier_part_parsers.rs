@@ -11,7 +11,7 @@ use crate::parser::parsers::{authority_parsers, Elms, path_parsers, UResult};
 // / path-rootless
 // / path-empty
 #[inline]
-pub(crate) fn hier_part(i: Elms) -> UResult<Elms, (Option<Authority>, Path)> {
+pub fn hier_part(i: Elms) -> UResult<Elms, (Option<Authority>, Path)> {
   if let (i, Some((authority, path))) = opt(preceded(
     tag("//"),
     tuple((authority_parsers::authority, path_parsers::path_abempty)),

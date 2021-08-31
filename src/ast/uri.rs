@@ -1,7 +1,5 @@
 use std::fmt::Formatter;
 
-use builder_pattern::Builder;
-
 use crate::ast::authority::Authority;
 use crate::ast::path::Path;
 use crate::ast::query::Query;

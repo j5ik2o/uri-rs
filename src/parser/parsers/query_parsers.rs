@@ -23,7 +23,7 @@ fn code_point(i: Elms) -> UResult<Elms, String> {
 
 // query = *( pchar / "/" / "?" )
 #[inline]
-pub(crate) fn query(i: Elms) -> UResult<Elms, Query> {
+pub fn query(i: Elms) -> UResult<Elms, Query> {
   let key_values = || tuple((code_point, opt(preceded(complete::char('='), code_point))));
   context(
     "query",
