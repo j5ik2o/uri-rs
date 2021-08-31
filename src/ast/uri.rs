@@ -1,9 +1,12 @@
 use std::fmt::Formatter;
+
+use builder_pattern::Builder;
+
 use crate::ast::authority::Authority;
 use crate::ast::path::Path;
 use crate::ast::query::Query;
 use crate::ast::scheme::Scheme;
-use crate::parser::parsers::{UriParseError, Elms, uri_parsers};
+use crate::parser::parsers::{Elms, uri_parsers, UriParseError};
 
 pub type Fragment = String;
 
@@ -107,7 +110,10 @@ impl Uri {
 #[cfg(test)]
 mod test {
   use std::env;
-  use crate::{Uri, Scheme};
+
+  use crate::{Scheme, Uri};
+
+  use super::*;
 
   fn init() {
     env::set_var("RUST_LOG", "debug");
