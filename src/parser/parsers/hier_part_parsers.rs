@@ -4,7 +4,7 @@ use nom::sequence::{preceded, tuple};
 
 use crate::ast::authority::Authority;
 use crate::ast::path::Path;
-use crate::parser::parsers::{authority_parsers, path_parsers, UResult, Elms};
+use crate::parser::parsers::{authority_parsers, Elms, path_parsers, UResult};
 
 // hier-part     = "//" authority path-abempty
 // / path-absolute
@@ -26,8 +26,9 @@ pub(crate) fn hier_part(i: Elms) -> UResult<Elms, (Option<Authority>, Path)> {
 
 #[cfg(test)]
 pub mod gens {
-  use crate::parser::parsers::authority_parsers::gens::authority_gen;
   use prop_check_rs::gen::{Gen, Gens};
+
+  use crate::parser::parsers::authority_parsers::gens::authority_gen;
   use crate::parser::parsers::path_parsers::gens::*;
 
   pub fn hier_part_gen() -> Gen<String> {
@@ -37,20 +38,22 @@ pub mod gens {
       })
     };
     gen1()
-//    let gen2 = || path_str_without_abempty_gen().fmap(|Pair(_, p2)| p2);
-//    Gens::one_bool().bind(move |b| if b { gen1() } else { gen2() })
+    //    let gen2 = || path_str_without_abempty_gen().fmap(|Pair(_, p2)| p2);
+    //    Gens::one_bool().bind(move |b| if b { gen1() } else { gen2() })
   }
 }
 
 #[cfg(test)]
 mod tests {
-  use super::*;
-  use prop_check_rs::prop::TestCases;
   use std::env;
-  use prop_check_rs::prop;
-  use crate::parser::parsers::hier_part_parsers::gens::hier_part_gen;
-  use prop_check_rs::rng::RNG;
+
   use anyhow::Result;
+  use prop_check_rs::prop;
+  use prop_check_rs::prop::TestCases;
+  use prop_check_rs::rng::RNG;
+
+  use super::*;
+  use super::gens::*;
 
   const TEST_COUNT: TestCases = 100;
 

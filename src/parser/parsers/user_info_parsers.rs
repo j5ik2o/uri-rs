@@ -69,9 +69,8 @@ mod tests {
   use prop_check_rs::prop::TestCases;
   use prop_check_rs::rng::RNG;
 
-  use crate::parser::parsers::user_info_parsers::gens::user_info_gen;
-
   use super::*;
+  use super::gens::*;
 
   const TEST_COUNT: TestCases = 100;
 

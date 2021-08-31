@@ -102,11 +102,11 @@ pub fn host_name(i: Elms) -> UResult<Elms, HostName> {
 
 #[cfg(test)]
 pub mod gens {
-
-  use crate::parser::parsers::ipv4_address_parsers::gens::*;
-  use crate::parser::parsers::basic_parsers::gens::*;
-  use crate::parser::parsers::ipv6_address_parsers::gens::*;
   use prop_check_rs::gen::{Gen, Gens};
+
+  use crate::parser::parsers::basic_parsers::gens::*;
+  use crate::parser::parsers::ipv4_address_parsers::gens::*;
+  use crate::parser::parsers::ipv6_address_parsers::gens::*;
 
   pub fn reg_name_str_gen() -> Gen<String> {
     rep_str_gen(1, 10, || {
@@ -159,16 +159,12 @@ mod tests {
   use std::env;
 
   use anyhow::Result;
-
   use prop_check_rs::prop;
   use prop_check_rs::prop::TestCases;
   use prop_check_rs::rng::RNG;
 
-  use crate::parser::parsers::host_parsers::gens::{
-    host_gen, ip_literal_str_gen, ipv_future_str_gen, reg_name_str_gen,
-  };
-
   use super::*;
+  use super::gens::*;
 
   const TEST_COUNT: TestCases = 100;
 

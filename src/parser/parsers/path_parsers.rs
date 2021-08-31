@@ -223,9 +223,9 @@ mod tests {
   use prop_check_rs::rng::RNG;
 
   use crate::parser::parsers::basic_parsers::gens::*;
-  use crate::parser::parsers::path_parsers::gens::*;
 
   use super::*;
+  use super::gens::*;
 
   const TEST_COUNT: TestCases = 100;
 

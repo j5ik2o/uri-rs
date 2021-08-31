@@ -88,7 +88,13 @@ impl Query {
         if v.is_none() {
           k.clone()
         } else {
-          format!("{}{}", k, v.as_ref().map(| s| format!("={}", s)).unwrap_or("".to_string()))
+          format!(
+            "{}{}",
+            k,
+            v.as_ref()
+              .map(|s| format!("={}", s))
+              .unwrap_or("".to_string())
+          )
         }
       })
       .join("&")

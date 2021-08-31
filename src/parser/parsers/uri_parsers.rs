@@ -60,20 +60,18 @@ pub(crate) fn uri(i: Elms) -> UResult<Elms, Uri> {
 
 #[cfg(test)]
 pub mod gens {
-  use crate::parser::parsers::scheme_parsers::gens::scheme_gen;
-  use crate::parser::parsers::hier_part_parsers::gens::hier_part_gen;
   use prop_check_rs::gen::Gen;
-  use crate::parser::parsers::query_parsers::gens::query_gen;
+
   use crate::parser::parsers::fragment_parsers::gens::fragment_str_gen;
+  use crate::parser::parsers::hier_part_parsers::gens::hier_part_gen;
+  use crate::parser::parsers::query_parsers::gens::query_gen;
+  use crate::parser::parsers::scheme_parsers::gens::scheme_gen;
 
   pub fn uri_gen() -> Gen<String> {
     scheme_gen().bind(|scheme| {
-      let g1 = hier_part_gen()
-        .fmap(move |hier_part| format!("{}:{}", scheme, hier_part));
-      let g2 = g1
-        .bind(|s| query_gen().fmap(move |q| format!("{}?{}",s, q)));
-      let g3 = g2
-        .bind(|s| fragment_str_gen().fmap(move |f| format!("{}#{}",s, f)));
+      let g1 = hier_part_gen().fmap(move |hier_part| format!("{}:{}", scheme, hier_part));
+      let g2 = g1.bind(|s| query_gen().fmap(move |q| format!("{}?{}", s, q)));
+      let g3 = g2.bind(|s| fragment_str_gen().fmap(move |f| format!("{}#{}", s, f)));
       g3
     })
   }
@@ -83,13 +81,13 @@ pub mod gens {
 mod tests {
   use std::env;
 
+  use anyhow::Result;
+  use prop_check_rs::prop;
   use prop_check_rs::prop::TestCases;
+  use prop_check_rs::rng::RNG;
 
   use super::*;
-  use prop_check_rs::prop;
-  use crate::parser::parsers::uri_parsers::gens::uri_gen;
-  use prop_check_rs::rng::RNG;
-  use anyhow::Result;
+  use super::gens::*;
 
   const TEST_COUNT: TestCases = 100;
 
@@ -113,6 +111,5 @@ mod tests {
       },
     );
     prop::test_with_prop(prop, 5, TEST_COUNT, RNG::new())
-
   }
 }

@@ -57,7 +57,7 @@ mod tests {
   use crate::parser::parsers::Elms;
 
   use super::*;
-  use crate::parser::parsers::scheme_parsers::gens::scheme_gen;
+  use super::gens::*;
 
   const TEST_COUNT: TestCases = 100;
 
