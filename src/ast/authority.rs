@@ -49,4 +49,17 @@ impl Authority {
       user_info,
     }
   }
+
+  pub fn host_name(&self) -> &HostName {
+    &self.host_name
+  }
+
+  pub fn port(&self) -> Option<u64> {
+    self.port
+  }
+
+  pub fn user_info(&self) -> Option<&UserInfo> {
+    self.user_info.as_ref()
+  }
+
 }
