@@ -1,13 +1,14 @@
 use std::fmt::Formatter;
 
 use crate::parser::parsers::Elms;
+use std::borrow::Cow;
 
 #[derive(Debug, Clone, PartialEq, Hash)]
-pub struct Scheme(String);
+pub struct Scheme(Cow<'static, str>);
 
 impl Default for Scheme {
   fn default() -> Self {
-    Scheme(String::default())
+    Scheme(Cow::default())
   }
 }
 
@@ -17,32 +18,26 @@ impl std::fmt::Display for Scheme {
   }
 }
 
-impl From<String> for Scheme {
-  fn from(src: String) -> Self {
-    Self(src)
-  }
-}
-
-impl From<&str> for Scheme {
-  fn from(src: &str) -> Self {
-    Self(src.to_string())
-  }
-}
-
-impl From<&[u8]> for Scheme {
-  fn from(src: &[u8]) -> Self {
-    Self(String::from_utf8(src.to_vec()).unwrap())
-  }
-}
-
+// impl From<T> for Scheme where T: Into<Cow<'static, str>> {
+//   fn from(src: T) -> Self {
+//     Self(src.into())
+//   }
+// }
+//
+// impl From<&[u8]> for Scheme {
+//   fn from(src: &[u8]) -> Self {
+//     Self(String::from_utf8(src.to_vec()).unwrap())
+//   }
+// }
+//
 impl From<Elms<'_>> for Scheme {
   fn from(src: Elms) -> Self {
-    Self(src.as_string().unwrap())
+    Self::new(src.as_string().unwrap())
   }
 }
 
 impl Scheme {
-  pub fn new(value: String) -> Self {
-    Self(value)
+  pub fn new(value: impl Into<Cow<'static, str>>) -> Self {
+    Self(value.into())
   }
 }

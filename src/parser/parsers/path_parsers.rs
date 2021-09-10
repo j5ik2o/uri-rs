@@ -42,7 +42,7 @@ pub(crate) fn segment_nz_nc(i: Elms) -> UResult<Elms, String> {
 #[inline]
 pub(crate) fn path_abempty(i: Elms) -> UResult<Elms, Path> {
   map(many0(preceded(complete::char('/'), segment)), |sl| {
-    Path::of_abempty_from_strings(&sl)
+    Path::of_abempty_from_strs(sl.into_iter())
   })(i)
 }
 
@@ -62,7 +62,7 @@ pub(crate) fn path_absolute(i: Elms) -> UResult<Elms, Path> {
           },
         )),
       ),
-      |sl_opt| Path::of_absolute_from_strings(&sl_opt.unwrap_or(Vec::new())),
+      |sl_opt| Path::of_absolute_from_strs(sl_opt.unwrap_or(Vec::new()).into_iter()),
     ),
   )(i)
 }
@@ -76,7 +76,7 @@ pub(crate) fn path_no_scheme(i: Elms) -> UResult<Elms, Path> {
       |(s, sl)| {
         let mut parts = vec![s];
         parts.extend(sl);
-        Path::of_no_scheme_from_strings(&parts)
+        Path::of_no_scheme_from_strs(parts.into_iter())
       },
     ),
   )(i);
@@ -101,7 +101,7 @@ pub(crate) fn path_rootless(i: Elms) -> UResult<Elms, Path> {
       |(s, sl)| {
         let mut parts = vec![s];
         parts.extend(sl);
-        Path::of_rootless_from_strings(&parts)
+        Path::of_rootless_from_strs(parts.into_iter())
       },
     ),
   )(i)

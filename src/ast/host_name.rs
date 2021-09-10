@@ -1,11 +1,12 @@
 use std::fmt::Formatter;
+use std::borrow::Cow;
 
 #[derive(Debug, Clone, PartialEq, Hash)]
-pub struct HostName(String);
+pub struct HostName(Cow<'static, str>);
 
 impl Default for HostName {
   fn default() -> Self {
-    HostName(String::default())
+    HostName(Cow::default())
   }
 }
 
@@ -15,20 +16,24 @@ impl std::fmt::Display for HostName {
   }
 }
 
-impl From<&str> for HostName {
-  fn from(src: &str) -> Self {
-    Self(src.to_string())
+impl From<&'static str> for HostName {
+  fn from(src: &'static str) -> Self {
+    Self::new(src)
   }
 }
 
 impl From<String> for HostName {
   fn from(src: String) -> Self {
-    Self(src)
+    Self::new(src)
   }
 }
 
 impl HostName {
-  pub fn new(value: String) -> Self {
-    Self(value)
+  pub fn new(value: impl Into<Cow<'static, str>>) -> Self {
+    Self(value.into())
+  }
+
+  pub fn as_str(&self) -> &str {
+    &self.0
   }
 }

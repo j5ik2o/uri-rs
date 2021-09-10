@@ -2,24 +2,29 @@ use std::fmt;
 use std::fmt::Formatter;
 
 use itertools::Itertools;
+use std::borrow::Cow;
 
 #[derive(Debug, Clone, PartialEq, Hash)]
 pub enum Path {
   RootlessPath {
     type_name: &'static str,
     parts: Vec<String>,
+    str: String,
   },
   AbemptyPath {
     type_name: &'static str,
     parts: Vec<String>,
+    str: String,
   },
   AbsolutePath {
     type_name: &'static str,
     parts: Vec<String>,
+    str: String,
   },
   NoSchemePath {
     type_name: &'static str,
     parts: Vec<String>,
+    str: String,
   },
   EmptyPath {
     type_name: &'static str,
@@ -38,64 +43,61 @@ impl fmt::Display for Path {
       Path::RootlessPath { .. } | Path::NoSchemePath { .. } | Path::EmptyPath { .. } => "",
       _ => "/",
     };
-    write!(f, "{}{}", root, self.parts().join("/"))
+    let s = format!("{}{}", root, self.parts().join("/"));
+    write!(f, "{}", s)
   }
 }
 
 impl Path {
-  pub fn of_rootless_from_strs(parts: &[&str]) -> Self {
+  pub fn of_rootless_from_strs(parts: impl Iterator<Item = impl Into<Cow<'static, str>>>) -> Self {
+    let type_name: &'static str = "rootless_path";
+    let part_strings = parts
+      .into_iter()
+      .map(|e| e.into().to_string())
+      .collect_vec();
     Path::RootlessPath {
-      type_name: "rootless_path",
-      parts: parts.into_iter().map(|e| e.to_string()).collect_vec(),
+      type_name,
+      parts: part_strings.clone(),
+      str: Self::create_string("", part_strings),
     }
   }
 
-  pub fn of_rootless_from_strings(parts: &[String]) -> Self {
-    Path::RootlessPath {
-      type_name: "rootless_path",
-      parts: Vec::from(parts),
-    }
-  }
-
-  pub fn of_abempty_from_strs(parts: &[&str]) -> Self {
+  pub fn of_abempty_from_strs(parts: impl Iterator<Item = impl Into<Cow<'static, str>>>) -> Self {
+    let type_name: &'static str = "abempty_path";
+    let part_strings = parts
+      .into_iter()
+      .map(|e| e.into().to_string())
+      .collect_vec();
     Path::AbemptyPath {
-      type_name: "abempty_path",
-      parts: parts.into_iter().map(|e| e.to_string()).collect_vec(),
+      type_name,
+      parts: part_strings.clone(),
+      str: Self::create_string("/", part_strings),
     }
   }
 
-  pub fn of_abempty_from_strings(parts: &[String]) -> Self {
-    Path::AbemptyPath {
-      type_name: "abempty_path",
-      parts: Vec::from(parts),
-    }
-  }
-
-  pub fn of_absolute_from_strs(parts: &[&str]) -> Self {
+  pub fn of_absolute_from_strs(parts: impl Iterator<Item = impl Into<Cow<'static, str>>>) -> Self {
+    let type_name: &'static str = "absolute_path";
+    let part_strings = parts
+      .into_iter()
+      .map(|e| e.into().to_string())
+      .collect_vec();
     Path::AbsolutePath {
-      type_name: "absolute_path",
-      parts: parts.into_iter().map(|e| e.to_string()).collect_vec(),
+      type_name,
+      parts: part_strings.clone(),
+      str: Self::create_string("/", part_strings),
     }
   }
 
-  pub fn of_absolute_from_strings(parts: &[String]) -> Self {
-    Path::AbsolutePath {
-      type_name: "absolute_path",
-      parts: Vec::from(parts),
-    }
-  }
-
-  pub fn of_no_scheme_from_strs(parts: &[&str]) -> Self {
+  pub fn of_no_scheme_from_strs(parts: impl Iterator<Item = impl Into<Cow<'static, str>>>) -> Self {
+    let type_name: &'static str = "no_scheme_path";
+    let part_strings = parts
+      .into_iter()
+      .map(|e| e.into().to_string())
+      .collect_vec();
     Path::NoSchemePath {
-      type_name: "no_scheme_path",
-      parts: parts.into_iter().map(|e| e.to_string()).collect_vec(),
-    }
-  }
-
-  pub fn of_no_scheme_from_strings(parts: &[String]) -> Self {
-    Path::NoSchemePath {
-      type_name: "no_scheme_path",
-      parts: Vec::from(parts),
+      type_name,
+      parts: part_strings.clone(),
+      str: Self::create_string("", part_strings),
     }
   }
 
@@ -138,11 +140,11 @@ impl Path {
   }
 
   pub fn to_rootless(&self) -> Path {
-    Path::of_rootless_from_strings(&self.parts().clone())
+    Path::of_rootless_from_strs(self.parts().clone().into_iter())
   }
 
   pub fn to_absolute(&self) -> Path {
-    Path::of_absolute_from_strings(&self.parts().clone())
+    Path::of_absolute_from_strs(self.parts().clone().into_iter())
   }
 
   pub fn add_part(&mut self, part: String) {
@@ -165,5 +167,19 @@ impl Path {
     for x in parts {
       self.add_part(x)
     }
+  }
+
+  pub fn as_str(&self) -> &str {
+    match self {
+      Path::RootlessPath { str, .. } => str,
+      Path::AbemptyPath { str, .. } => str,
+      Path::AbsolutePath { str, .. } => str,
+      Path::NoSchemePath { str, .. } => str,
+      Path::EmptyPath { .. } => "",
+    }
+  }
+
+  fn create_string(root: &str, parts: impl IntoIterator<Item = String>) -> String {
+    format!("{}{}", root, parts.into_iter().join("/"))
   }
 }
