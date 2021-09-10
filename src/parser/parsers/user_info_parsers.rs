@@ -28,7 +28,7 @@ pub(crate) fn user_info(i: Elms) -> UResult<Elms, UserInfo> {
     "user_info",
     map(
       tuple((code_point, opt(preceded(complete::char(':'), code_point)))),
-      |(user_name, password)| (user_name.as_str(), password.as_ref().map(|s| s.as_str())).into(),
+      |(user_name, password)| (user_name, password).into(),
     ),
   )(i)
 }

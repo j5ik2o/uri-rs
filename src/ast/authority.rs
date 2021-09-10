@@ -61,4 +61,9 @@ impl Authority {
   pub fn user_info(&self) -> Option<&UserInfo> {
     self.user_info.as_ref()
   }
+
+  // pub fn as_str() -> &str
+  // {
+  //
+  // }
 }
